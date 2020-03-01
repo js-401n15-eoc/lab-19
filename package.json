@@ -1,0 +1,19 @@
+{
+  "name": "lab-19",
+  "version": "1.0.0",
+  "description": "Lab 19",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest --verbose --coverage"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "events": "^3.1.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "jest": "^24.8.0",
+    "net": "^1.0.2",
+    "util": "^0.12.1"
+  }
+}
