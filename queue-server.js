@@ -42,7 +42,9 @@ io.of('db', socket => {
 
     for (const messageID in messages[event][clientID]) {
       let payload = messages[event][clientID][messageID];
-      // io.of('db').to()
+      io.of('db')
+        .to(socket.id)
+        .emit(event, { messageID, payload });
       console.log('resend', messageID);
     }
   });
