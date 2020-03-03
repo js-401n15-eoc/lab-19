@@ -10,4 +10,4 @@ socket.emit('subscribe', { id: clientID, event: 'testEvent' });
 socket.on('testEvent', payload => {
   socket.emit('received', true);
   console.log('TE', payload);
-})
+});
