@@ -11,8 +11,4 @@ app.get('/', (req, res) => {
   res.send('ok');
 });
 
-app.post('/delivery/:retailer/:code', (req, res) => {
-  res.send('ok')
-});
-
 app.listen(8080, () => console.log('api is running on 8080'));

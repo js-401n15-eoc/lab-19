@@ -36,6 +36,21 @@ io.of('db', socket => {
     io.of('db').emit('testEvent', msgObj);
   });
 
+  socket.on('package-delivery', payload => {
+    let event = 'package-delivery';
+    let messageID = uuid();
+
+    for (let subscriber in messages['package-delivery']) {
+      messages[event][subscriber][messageID] = payload;
+    }
+
+    console.log(messages);
+
+    let msgObj = { messageID, payload };
+
+    io.of('db').emit('package-delivery', msgObj);
+  });
+
   socket.on('getMissed', payload => {
     let { clientID, event } = payload;
     // console.log('payload in getMissed', payload, messages);
@@ -49,7 +64,25 @@ io.of('db', socket => {
     }
   });
 
+  socket.on('getMissedStuff', payload => {
+    let { clientID, event } = payload;
+
+    for (const messageID in messages[event][clientID]) {
+      let payload = messages[event][clientID][messageID];
+      io.of('db')
+        .to(socket.id)
+        .emit(event, { messageID, payload });
+      console.log('resend', messageID);
+    }
+  });
+
   socket.on('received', payload => {
+    const { messageID, clientID, event } = payload;
+    delete messages[event][clientID][messageID];
+    console.log('after', messages);
+  });
+
+  socket.on('package-delivered', payload => {
     const { messageID, clientID, event } = payload;
     delete messages[event][clientID][messageID];
     console.log('after', messages);
